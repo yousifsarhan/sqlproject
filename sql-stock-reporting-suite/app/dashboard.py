@@ -14,6 +14,7 @@ def get_db_config() -> dict:
             "user": st.secrets["DB_USER"],
             "password": st.secrets["DB_PASSWORD"],
             "database": st.secrets["DB_NAME"],
+            "port": int(st.secrets.get("DB_PORT", 3306)),
         }
 
     return {
@@ -21,6 +22,7 @@ def get_db_config() -> dict:
         "user": os.getenv("DB_USER"),
         "password": os.getenv("DB_PASSWORD"),
         "database": os.getenv("DB_NAME"),
+        "port": int(os.getenv("DB_PORT", "3306")),
     }
 
 st.title("SQL Stock Reporting Suite")
@@ -29,7 +31,8 @@ st.caption("Prices stored in MySQL, reported via Views/Procedures")
 try:
     conn = mysql.connector.connect(**get_db_config())
 except mysql.connector.Error as exc:
-    st.error(f"Database connection failed: {exc}")
+    st.error("Database connection failed. Check DB_* secrets/env and remote host.")
+    st.caption(f"Details: {exc}")
     st.stop()
 
 st.subheader("Latest Prices (vw_latest_price)")

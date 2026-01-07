@@ -1,0 +1,1 @@
+-r sql-stock-reporting-suite/requirements.txt

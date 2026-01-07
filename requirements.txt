@@ -1,1 +1,5 @@
--r sql-stock-reporting-suite/requirements.txt
+streamlit
+pandas
+requests
+mysql-connector-python
+python-dotenv
